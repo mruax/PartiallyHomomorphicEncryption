@@ -5,7 +5,7 @@ WORKDIR /app
 # Установка зависимостей
 RUN pip install --no-cache-dir \
     numpy \
-    torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu \
+    torch \
     phe
 
 # Копирование всех Python модулей
