@@ -1,0 +1,36 @@
+services:
+  party1:
+    build: .
+    container_name: party1
+    command: python party.py
+    environment:
+      - RANK=0
+      - WORLD_SIZE=2
+      - MASTER_ADDR=party1
+      - MASTER_PORT=29500
+      - LOGLEVEL=INFO
+    volumes:
+      - ./output:/app/output
+    networks:
+      - mpc_network
+
+  party2:
+    build: .
+    container_name: party2
+    command: python party.py
+    environment:
+      - RANK=1
+      - WORLD_SIZE=2
+      - MASTER_ADDR=party1
+      - MASTER_PORT=29500
+      - LOGLEVEL=INFO
+    volumes:
+      - ./output:/app/output
+    networks:
+      - mpc_network
+    depends_on:
+      - party1
+
+networks:
+  mpc_network:
+    driver: bridge
